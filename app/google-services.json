@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "946119468750",
+    "firebase_url": "https://rapid-rite-294806.firebaseio.com",
+    "project_id": "rapid-rite-294806",
+    "storage_bucket": "rapid-rite-294806.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:946119468750:android:a3771f2e30a7068bd5929f",
+        "android_client_info": {
+          "package_name": "org.techtown.chabak"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "946119468750-dpfv7dst0bbjn0osjoujkd1v3q2hfmot.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCm38f69S2WFdFJMycsFT5e5EKNC-cORQE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "946119468750-dpfv7dst0bbjn0osjoujkd1v3q2hfmot.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

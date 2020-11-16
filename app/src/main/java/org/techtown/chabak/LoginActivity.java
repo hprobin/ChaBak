@@ -18,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
@@ -68,7 +67,6 @@ public class LoginActivity extends AppCompatActivity {
                 final String u_pw = new_pw.getText().toString();
                 final String longtitude1 = Double.toString(longtitude);
                 final String latitude1 = Double.toString(latitude);
-                final String Token = FirebaseInstanceId.getInstance().getToken();
                 final String address=getCurrentAddress(latitude,longtitude);
                 //회원가입이 되어있다면 아이디와 비밀번호를 입력하면 로그인버튼 클릭시 아이디와 비밀번호,위도,경도, 푸쉬알람을 보내기위한 토큰, 그리고 위도,경도에 해당되는 주소를 변수에 저장합니다.
                 Response.Listener<String> responseListener=new Response.Listener<String>() {
@@ -100,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 };
-                LoginRequest loginRequest = new LoginRequest(u_id,u_pw,longtitude1,latitude1,Token,address,responseListener);
+                LoginRequest loginRequest = new LoginRequest(u_id,u_pw,longtitude1,latitude1,address,responseListener);
                 RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
                 queue.add(loginRequest);
                 //변수에 저장된값들을 서버에 전달하기위해 volley라이브러리와 LoginRequest class를 이용하여 서버에 전달할 것입니다.

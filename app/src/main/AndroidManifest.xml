@@ -10,9 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <meta-data
-            android:name="com.naver.maps.map.CLIENT_ID"
-            android:value="73nyeu4zg5" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBp7altM1tq-OpQLdPCn0_8Q7-JHXG9BPA" />

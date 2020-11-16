@@ -14,7 +14,7 @@ public class LoginRequest extends StringRequest {
     final static private String URL = "http://118.67.129.164/login.php";
     private Map<String, String>parameters;
 
-    public LoginRequest(String u_id, String u_pw, String longtitude, String latitude, String Token, String address, Response.Listener<String> listener) {
+    public LoginRequest(String u_id, String u_pw, String longtitude, String latitude, String address, Response.Listener<String> listener) {
         super(Request.Method.POST, URL, listener, null);
 
         parameters = new HashMap<>();
@@ -22,7 +22,6 @@ public class LoginRequest extends StringRequest {
         parameters.put("u_pw", u_pw);
         parameters.put("longtitude", longtitude);
         parameters.put("latitude", latitude);
-        parameters.put("Token", Token);
         parameters.put("address",address);
     }
 
