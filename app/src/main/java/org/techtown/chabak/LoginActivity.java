@@ -36,14 +36,15 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        showPermissionDialog();//어플 실행시 gps사용 권한 확인 함수입니다.
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+        //showPermissionDialog();//어플 실행시 gps사용 권한 확인 함수입니다.
+        //ActionBar actionBar = getSupportActionBar();
+        //actionBar.hide();
 
         setContentView(R.layout.activity_login);
-        GpsTracker gpsTracker = new GpsTracker(LoginActivity.this);
-        final double longtitude =gpsTracker.getLongitude();
-        final double latitude = gpsTracker.getLatitude();
+
+        //GpsTracker gpsTracker = new GpsTracker(LoginActivity.this);
+        //final double longtitude =gpsTracker.getLongitude();
+        //final double latitude = gpsTracker.getLatitude();
         //사용자의 gps정보를 얻어와서 위도와 경도를 변수에 저장합니다.
 
         final EditText new_id=(EditText)findViewById(R.id.new_id);
@@ -65,9 +66,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view){
                 final String u_id = new_id.getText().toString();
                 final String u_pw = new_pw.getText().toString();
-                final String longtitude1 = Double.toString(longtitude);
-                final String latitude1 = Double.toString(latitude);
-                final String address=getCurrentAddress(latitude,longtitude);
+                //final String longtitude1 = Double.toString(longtitude);
+                //final String latitude1 = Double.toString(latitude);
+                //final String address=getCurrentAddress(latitude,longtitude);
                 //회원가입이 되어있다면 아이디와 비밀번호를 입력하면 로그인버튼 클릭시 아이디와 비밀번호,위도,경도, 푸쉬알람을 보내기위한 토큰, 그리고 위도,경도에 해당되는 주소를 변수에 저장합니다.
                 Response.Listener<String> responseListener=new Response.Listener<String>() {
                     @Override
@@ -98,7 +99,8 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 };
-                LoginRequest loginRequest = new LoginRequest(u_id,u_pw,longtitude1,latitude1,address,responseListener);
+                //LoginRequest loginRequest = new LoginRequest(u_id,u_pw,longtitude1,latitude1,address,responseListener);
+                LoginRequest loginRequest = new LoginRequest(u_id,u_pw,responseListener);
                 RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
                 queue.add(loginRequest);
                 //변수에 저장된값들을 서버에 전달하기위해 volley라이브러리와 LoginRequest class를 이용하여 서버에 전달할 것입니다.

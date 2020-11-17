@@ -48,7 +48,7 @@ public class SignUpActivity extends AppCompatActivity {
                 String u_pw = mEditTextuser_pw.getText().toString();
 
                 InsertData task = new InsertData();
-                task.execute("http://" + IP_ADDRESS + "/sign.php", u_id,u_pw);
+                task.execute("http://" + IP_ADDRESS + "/embeded/sign.php", u_id,u_pw);
 
 
                 mEditTextuser_id.setText("");
