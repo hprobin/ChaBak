@@ -2,9 +2,11 @@ package org.techtown.chabak;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -12,6 +14,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
@@ -204,6 +207,9 @@ public class MainActivity extends AppCompatActivity
         double[] la = {36.1123553,37.5146143,34.5283651,37.58839,37.7304486,37.4324716,36.2782276,37.6442705,35.0180651,36.8993337,35.1919657,35.1073405,34.3685481,36.2591721,37.3877587,36.0463175,37.4703415,36.3242512,37.7034643,37.0695502};
         double[] lo = {127.586589,127.998454,127.123507,126.522441,127.567087,126.417772,127.342052,126.343365,126.854553,127.92256,127.377534,126.609115,126.927839,127.641961,127.546423,128.99207,128.843965,127.672127,127.605357,128.031064};
         String[] name = {"기러기 공원","내지리 섬강 노지","녹동 소록대교 밑","동검도 선착장 앞","마곡유원지","마시안 해변","상보안 유원지","석모도 어류정항","솔밭유원지","수주팔봉 강변","압록유원지","앵두공원","약산 가사동백숲 방파제","옥천 야영장 부근 금강변","이포보 오토캠핑장 인근 강변","임고 강변공원","정선 미락숲","지수리 금강변","홍천강변","삼탄유원지 다리밑"};
+        String[] toilet={"사용가능","사용가능","사용가능","사용가능","사용가능","사용가능","사용가능","사용가능","사용가능","사용가능","사용가능","사용가능","사용가능","사용가능","사용불가","사용가능","사용가능","사용가능","사용불가","사용불가"};
+        String[] sink={"사용가능","사용불가","사용불가","사용불가","사용가능","사용불가","사용가능","사용가능","사용불가","사용가능","사용가능","사용가능","사용가능","사용가능","사용불가","사용가능","사용가능","사용가능","사용불가","사용불가"};
+        String[] water={"사용가능","사용불가","사용불가","사용가능","사용가능","사용불가","사용가능","사용가능","사용가능","사용가능","사용가능","사용가능","사용가능","사용가능","사용불가","사용가능","사용가능","사용가능","사용불가","사용불가"};
         mMap = googleMap;
         //서울의 위도 경도
         LatLng SEOUL = new LatLng(37.56, 126.97);
@@ -216,7 +222,7 @@ public class MainActivity extends AppCompatActivity
             marker[i] = new MarkerOptions();
             marker[i].position(new LatLng(la[i],lo[i]));
             marker[i].title(name[i]);
-            marker[i].snippet("1");
+            marker[i].snippet("공중화장실 : "+toilet[i]+"개수대 : "+sink[i]+"수돗물 : "+water[i]);
             mMap.addMarker(marker[i]);
         }
         /*
@@ -225,17 +231,7 @@ public class MainActivity extends AppCompatActivity
         marker1.title(name[0]);
         mMap.addMarker(marker1);*/
 
-        MarkerOptions markerOptions1= new MarkerOptions();
-        markerOptions1.position(GwangJu);
-        markerOptions1.title("광주");
-        markerOptions1.snippet("우리집이다 이색갸~");
-        mMap.addMarker(markerOptions1);
-        //마커 옵션
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(SEOUL);
-        markerOptions.title("서울");
-        markerOptions.snippet("한국의 수도");
-        mMap.addMarker(markerOptions);
+
 
         //줌 인 1,5,10 ,20 단위였던듯
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(start, 7));
@@ -246,7 +242,45 @@ public class MainActivity extends AppCompatActivity
         //나침반 생성 안돼 왜지? 괜찮아 필요없어
         mapUiSettings.setCompassEnabled(true);
 
+        //mMap.setOnMarkerClickListener(this);
+        //정보창 클릭 리스너
+        mMap.setOnInfoWindowClickListener(infoWindowClickListener);
+
+        //마커 클릭 리스너
+        this.mMap.setOnMarkerClickListener(markerClickListener);
 
     }
 
+    //정보창 클릭 리스너
+    GoogleMap.OnInfoWindowClickListener infoWindowClickListener = new GoogleMap.OnInfoWindowClickListener() {
+        @Override
+        public void onInfoWindowClick(Marker marker) {
+            String markerId = marker.getId();
+            LatLng location = marker.getPosition();
+            Double serversend_lat=location.latitude;
+            Double serversend_long= location.longitude;
+
+            Toast.makeText(MainActivity.this, "정보창 클릭 Marker ID : "+markerId, Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(getApplicationContext(),TalkActivity.class);
+            intent.putExtra("serversend_lat",serversend_lat);
+            intent.putExtra("serversend_long",serversend_long);
+
+            startActivityForResult(intent,100);//액티비티 띄우기
+            //startActivity(intent);
+        }
+    };
+
+    //마커 클릭 리스너
+    GoogleMap.OnMarkerClickListener markerClickListener = new GoogleMap.OnMarkerClickListener() {
+        @Override
+        public boolean onMarkerClick(Marker marker) {
+            String markerId = marker.getId();
+            //선택한 타겟위치
+            LatLng location = marker.getPosition();
+            Toast.makeText(MainActivity.this, "마커 클릭 Marker ID : "+markerId+"("+location.latitude+" "+location.longitude+")", Toast.LENGTH_SHORT).show();
+
+            return false;
+        }
+    };
 }
